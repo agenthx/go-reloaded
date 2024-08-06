@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
-	piscine "piscine/up"
+	piscine "piscine/uplowcap"
 )
 
 func main() {
@@ -30,7 +30,7 @@ func main() {
 		sentence += string(data[:i])
 	}
 
-	sentence , err = piscine.Up(sentence)
+	sentence , err = piscine.UpLowCap(sentence)
 	if err != nil {
 		fmt.Println(err)
 		return
