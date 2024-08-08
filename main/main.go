@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"piscine/functions"
+	piscine "piscine/functions"
 	"regexp"
 	"strings"
 )
