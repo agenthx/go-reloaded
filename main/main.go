@@ -3,12 +3,12 @@ package main
 import (
 	"fmt"
 	"os"
-	piscine "piscine/uplowcap"
+	"piscine"
 )
 
 func main() {
-	input := "sample.txt"
-	output := "result.txt"
+	input := "text files/sample.txt"
+	output := "text files/result.txt"
 
 	file, err := os.Open(input)
 	if err != nil {
@@ -30,7 +30,7 @@ func main() {
 		sentence += string(data[:i])
 	}
 
-	sentence , err = piscine.UpLowCap(sentence)
+	sentence, err = piscine.UpLowCap(sentence)
 	if err != nil {
 		fmt.Println(err)
 		return
