@@ -42,7 +42,12 @@ func main() {
 	}
 	regex := regexp.MustCompile(`\(bin\)|\(hex\)|\(up\)|\(low\)|\(cap\)`)
 	sentence = regex.ReplaceAllLiteralString(sentence, "")
-
+	//fix vowels
+	sentence = piscine.Vowels(sentence)
+	//remove extra spaces caused by regex
+	sentence = piscine.Spaces(sentence)
+	//fix punctuations
+	sentence = piscine.Punct(sentence)
 	//create result file
 	file, err := os.Create("text files/result.txt")
 	if err != nil {
