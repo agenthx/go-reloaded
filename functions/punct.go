@@ -1,7 +1,5 @@
 package piscine
 
-import "fmt"
-
 func Punct(sentence string) string {
 	result := ""
 	for i := 0; i < len(sentence); i++ {
@@ -15,7 +13,6 @@ func Punct(sentence string) string {
 				i = j
 			}
 			result += " "
-			fmt.Println(result)
 		} else {
 			result += string(sentence[i])
 		}
