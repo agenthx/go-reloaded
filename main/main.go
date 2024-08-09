@@ -48,6 +48,8 @@ func main() {
 	sentence = piscine.Spaces(sentence)
 	//fix punctuations
 	sentence = piscine.Punct(sentence)
+	//fix apostrophes
+	sentence = piscine.Apostrophe(sentence)
 	//create result file
 	file, err := os.Create("text files/result.txt")
 	if err != nil {

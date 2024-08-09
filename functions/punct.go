@@ -20,7 +20,7 @@ func Punct(sentence string) string {
 	return result
 }
 
-func Ifp(l string) bool {
+func Ifp(l string) bool { //if its a punctuation
 	p := ".,!?:;"
 
 	for _, pp := range p {
