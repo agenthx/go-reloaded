@@ -44,6 +44,8 @@ func main() {
 	sentence = regex.ReplaceAllLiteralString(sentence, "")
 	//fix vowels
 	sentence = piscine.Vowels(sentence)
+	//UpLowCap with numbers
+	sentence = piscine.UpLowCap(sentence)
 	//remove extra spaces caused by regex
 	sentence = piscine.Spaces(sentence)
 	//fix punctuations
