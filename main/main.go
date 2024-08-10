@@ -35,17 +35,13 @@ func main() {
 			}
 		}
 	}
-	//store the new sentence and remove the (hex), etc..
-	sentence := ""
-	for _, word := range items {
-		sentence += word + " "
-	}
+	//UpLowCap with numbers
+	sentence:=piscine.UpLowCap(items)
+	//remove the (hex), etc..
 	regex := regexp.MustCompile(`\(bin\)|\(hex\)|\(up\)|\(low\)|\(cap\)`)
 	sentence = regex.ReplaceAllLiteralString(sentence, "")
 	//fix vowels
 	sentence = piscine.Vowels(sentence)
-	//UpLowCap with numbers
-	sentence = piscine.UpLowCap(sentence)
 	//remove extra spaces caused by regex
 	sentence = piscine.Spaces(sentence)
 	//fix punctuations

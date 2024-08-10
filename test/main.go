@@ -2,29 +2,35 @@ package main
 
 import (
 	"fmt"
-	"strconv"
-	"strings"
+	piscine "piscine/functions"
 )
 
 func main() {
-	var arr [4]string
-	arr[0] = "lol"
-	arr[1] = "hahah"
-	arr[2] = "kakak"
-	arr[3] = "(up, 2)"
-	result := "lol "
-	for k, word := range arr {
-		if strings.HasPrefix(word, "(up,") {
-			for i, ch := range word {
-				if ch == ',' {
-					num, _ := strconv.Atoi(string(word[i+2]))
-					for j := num; j > 0; j-- {
-						result += strings.ToUpper(string(arr[k-num])) + " "
-						num--
-					}
-				}
-			}
-		}
-	}
-	fmt.Println(result)
+	var items [7]string
+	items[0] = "Okay"
+	items[1] = "(up)"
+	items[2] = "lets"
+	items[3] = "o"
+	items[4] = "ha"
+	items[5] = "(up,2)"
+	items[6] = "10"
+
+	// sent:="okay then lets see this (up,3)"
+	// arr:= strings.Split(sent, " ")
+	// result:=""
+	// for k, word := range arr {
+	// 	if strings.HasPrefix(word, "(up,") {
+	// 		for i, ch := range word {
+	// 			if ch == ',' {
+	// 				num, _ := strconv.Atoi(string(word[i+]))
+	// 				for j := num; j > 0; j-- {
+	// 					result += strings.ToUpper(string(arr[k-num])) + " "
+	// 					num--
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
+	// fmt.Println(result)
+	fmt.Println(piscine.UpLowCap(items))
 }
