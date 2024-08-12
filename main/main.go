@@ -4,19 +4,20 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	piscine "piscine/functions"
 	"regexp"
 	"strings"
+
+	piscine "piscine/functions"
 )
 
 func main() {
-	file, ferr := os.Open("text files/sample.txt") //open the file sample.txt
+	file, ferr := os.Open("text files/sample.txt") // open the file sample.txt
 	if ferr != nil {
 		panic(ferr)
 	}
 	defer file.Close()
 
-	scanner := bufio.NewScanner(file) //read the contents of the file and make the changes
+	scanner := bufio.NewScanner(file) // read the contents of the file and make the changes
 	var items []string
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -35,26 +36,26 @@ func main() {
 			}
 		}
 	}
-	//UpLowCap with numbers
-	sentence:=piscine.UpLowCap(items)
-	//remove the (hex), etc..
+	// UpLowCap with numbers
+	sentence := piscine.UpLowCap(items)
+	// remove the (hex), etc..
 	regex := regexp.MustCompile(`\(bin\)|\(hex\)|\(up\)|\(low\)|\(cap\)`)
 	sentence = regex.ReplaceAllLiteralString(sentence, "")
-	//fix vowels
+	// fix vowels
 	sentence = piscine.Vowels(sentence)
-	//remove extra spaces caused by regex
+	// remove extra spaces caused by regex
 	sentence = piscine.Spaces(sentence)
-	//fix punctuations
+	// fix punctuations
 	sentence = piscine.Punct(sentence)
-	//fix apostrophes
+	// fix apostrophes
 	sentence = piscine.Apostrophe(sentence)
-	//create result file
+	// create result file
 	file, err := os.Create("text files/result.txt")
 	if err != nil {
 		panic(err)
 	}
 	defer file.Close()
-	//write the sentence in the file
+	// write the sentence in the file
 	_, werr := file.WriteString(sentence)
 	if err != nil {
 		panic(werr)
