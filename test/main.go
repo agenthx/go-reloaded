@@ -8,11 +8,11 @@ import (
 func main() {
 	var items [7]string
 	items[0] = "Okay"
-	items[1] = "(up)"
+	items[1] = "(wow)"
 	items[2] = "lets"
 	items[3] = "o"
-	items[4] = "ha"
-	items[5] = "(up,2)"
+	items[4] = "hAJDFAKLFa"
+	items[5] = "(low,3)"
 	items[6] = "10"
 
 	// sent:="okay then lets see this (up,3)"

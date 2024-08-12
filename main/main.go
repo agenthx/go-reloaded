@@ -36,8 +36,9 @@ func main() {
 			}
 		}
 	}
+	sentence:=""
 	// UpLowCap with numbers
-	sentence := piscine.UpLowCap(items)
+	// sentence := piscine.UpLowCap(items)
 	// remove the (hex), etc..
 	regex := regexp.MustCompile(`\(bin\)|\(hex\)|\(up\)|\(low\)|\(cap\)`)
 	sentence = regex.ReplaceAllLiteralString(sentence, "")
