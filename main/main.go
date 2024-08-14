@@ -27,18 +27,19 @@ func main() {
 	for scanner.Scan() {
 		line := scanner.Text()
 		items = strings.Split(line, " ")
-		for i, word := range items {
-			if word == "(bin)" {
-				items[i-1] = piscine.Bin2Dec(items[i-1])
-			} else if word == "(hex)" {
-				items[i-1] = piscine.Hex2Dec(items[i-1])
-			} else if word == "(up)" {
-				items[i-1] = strings.ToUpper(items[i-1])
-			} else if word == "(low)" {
-				items[i-1] = strings.ToLower(items[i-1])
-			} else if word == "(cap)" {
-				items[i-1] = strings.Title(items[i-1])
-			}
+	}
+	//fix the editing functions re                                 
+	for i, word := range items {
+		if word == "(bin)" {
+			items[i-1] = piscine.Bin2Dec(items[i-1])
+		} else if word == "(hex)" {
+			items[i-1] = piscine.Hex2Dec(items[i-1])
+		} else if word == "(up)" {
+			items[i-1] = strings.ToUpper(items[i-1])
+		} else if word == "(low)" {
+			items[i-1] = strings.ToLower(items[i-1])
+		} else if word == "(cap)" {
+			items[i-1] = strings.Title(items[i-1])
 		}
 	}
 	// UpLowCap with numbers
