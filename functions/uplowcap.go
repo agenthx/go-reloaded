@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func UpLowCap(items [7]string) string {
+func UpLowCap(items []string) string {
 	var num int   // the number given
 	var place int // place of function
 	what := 0     //which function to perform
@@ -13,29 +13,39 @@ func UpLowCap(items [7]string) string {
 		if strings.HasPrefix(word, "(up,") { // we found the up with number
 			what = 1
 			place = i
-			for _, ch := range word {
-				if ch > '0' && ch < '9' {
-					num, _ = strconv.Atoi(string(ch)) // we extracted the number
-				}
-			}
+			num = ExtractNum(word)
+			items = modify(what, place, num, items)
 		} else if strings.HasPrefix(word, "(low,") { // we found the low with number
 			what = 2
 			place = i
-			for _, ch := range word {
-				if ch > '0' && ch < '9' {
-					num, _ = strconv.Atoi(string(ch)) // we extracted the number
-				}
-			}
+			num = ExtractNum(word)
+			items = modify(what, place, num, items)
 		} else if strings.HasPrefix(word, "(cap,") { // we found the cap with number
 			what = 3
 			place = i
-			for _, ch := range word {
-				if ch > '0' && ch < '9' {
-					num, _ = strconv.Atoi(string(ch)) // we extracted the number
-				}
-			}
+			num = ExtractNum(word)
+			items = modify(what, place, num, items)
 		}
 	}
+	// store the updated items in a string
+	sent := ""
+	for _, word := range items {
+		sent += word + " "
+	}
+	return sent
+}
+
+func ExtractNum(word string) int {
+	var num int
+	for _, ch := range word {
+		if ch > '0' && ch < '9' {
+			num, _ = strconv.Atoi(string(ch)) // we extracted the number
+		}
+	}
+	return num
+}
+
+func modify(what, place, num int, items []string) []string {
 	// switch
 	switch what {
 	case 1:
@@ -54,11 +64,5 @@ func UpLowCap(items [7]string) string {
 			items[place-j] = strings.Title(items[place-j])
 		}
 	}
-
-	// store the updated items in a string
-	sent := ""
-	for _, word := range items {
-		sent += word + " "
-	}
-	return sent
+	return items
 }

@@ -17,21 +17,21 @@
 // 	var combine string = string(txt)
 
 // 	//recombining the different cases if there are spaces in-between and adjusting for case-insensitivity
-// 	reH := regexp.MustCompile((?i)\(+\s*h\s*e\s*x\s*\)+)
+// 	reH := regexp.MustCompile(`(?i)\(+\s*h\s*e\s*x\s*\)+`)
 // 	combine = reH.ReplaceAllString(combine, " (hex) ")
-// 	reB := regexp.MustCompile((?i)\(+\s*b\s*i\s*n\s*\)+)
+// 	reB := regexp.MustCompile(`(?i)\(+\s*b\s*i\s*n\s*\)+`)
 // 	combine = reB.ReplaceAllString(combine, " (bin) ")
-// 	reL := regexp.MustCompile((?i)\(+\s*l\s*o\s*w\s*\)+)
+// 	reL := regexp.MustCompile(`(?i)\(+\s*l\s*o\s*w\s*\)+`)
 // 	combine = reL.ReplaceAllString(combine, " (low) ")
-// 	reU := regexp.MustCompile((?i)\(+\s*u\s*p\s*\)+)
+// 	reU := regexp.MustCompile(`(?i)\(+\s*u\s*p\s*\)+`)
 // 	combine = reU.ReplaceAllString(combine, " (up) ")
-// 	reC := regexp.MustCompile((?i)\(+\s*c\s*a\s*p\s*\)+)
+// 	reC := regexp.MustCompile(`(?i)\(+\s*c\s*a\s*p\s*\)+`)
 // 	combine = reC.ReplaceAllString(combine, " (cap) ")
-// 	reCNum := regexp.MustCompile((?i)\(+\s*c\s*a\s*p\s*,\s*(\d+)\s*\)+)
+// 	reCNum := regexp.MustCompile(`(?i)\(+\s*c\s*a\s*p\s*,\s*(\d+)\s*\)+`)
 // 	combine = reCNum.ReplaceAllString(combine, " (cap,$1) ")
-// 	reUNum := regexp.MustCompile((?i)\(+\s*u\s*p\s*,\s*(\d+)\s*\)+)
+// 	reUNum := regexp.MustCompile(`(?i)\(+\s*u\s*p\s*,\s*(\d+)\s*\)+`)
 // 	combine = reUNum.ReplaceAllString(combine, " (up,$1) ")
-// 	reLNum := regexp.MustCompile((?i)\(+\s*l\s*o\s*w\s*,\s*(\d+)\s*\)+)
+// 	reLNum := regexp.MustCompile(`(?i)\(+\s*l\s*o\s*w\s*,\s*(\d+)\s*\)+`)
 // 	combine = reLNum.ReplaceAllString(combine, " (low,$1) ")
 
 // 	//turns the string into a splice of strings
@@ -151,4 +151,4 @@
 // 	}
 // 	final := strings.Join(str, " ")
 // 	return final
-//f }
+// f }

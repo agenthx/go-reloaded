@@ -11,7 +11,12 @@ import (
 )
 
 func main() {
-	file, ferr := os.Open("text files/sample.txt") // open the file sample.txt
+	arr:=os.Args //save the args given
+
+	input:=arr[1]
+	output:=arr[2]
+
+	file, ferr := os.Open(input) // open the file sample.txt
 	if ferr != nil {
 		panic(ferr)
 	}
@@ -36,11 +41,10 @@ func main() {
 			}
 		}
 	}
-	sentence:=""
 	// UpLowCap with numbers
-	// sentence := piscine.UpLowCap(items)
+	sentence := piscine.UpLowCap(items)
 	// remove the (hex), etc..
-	regex := regexp.MustCompile(`\(bin\)|\(hex\)|\(up\)|\(low\)|\(cap\)`)
+	regex := regexp.MustCompile(`\(bin\)|\(hex\)|\(up\)|\(low\)|\(cap\)|\(up,\d+\)|\(low,\d+\)|\(cap,\d+\)`)
 	sentence = regex.ReplaceAllLiteralString(sentence, "")
 	// fix vowels
 	sentence = piscine.Vowels(sentence)
@@ -51,7 +55,7 @@ func main() {
 	// fix apostrophes
 	sentence = piscine.Apostrophe(sentence)
 	// create result file
-	file, err := os.Create("text files/result.txt")
+	file, err := os.Create(output)
 	if err != nil {
 		panic(err)
 	}
