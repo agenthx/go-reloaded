@@ -1,1 +1,1 @@
-this is an EIG 
+WOW LOL Error: string cointains non-binary numbers 

@@ -11,18 +11,20 @@ import (
 )
 
 func main() {
-	arr:=os.Args //save the args given
+	arr := os.Args //save the args given
 
-	input:=arr[1]
-	output:=arr[2]
+	input := arr[1]  //file to read
+	output := arr[2] // file to write
 
 	file, ferr := os.Open(input) // open the file sample.txt
 	if ferr != nil {
-		panic(ferr)
+		fmt.Println(ferr)
+		return
 	}
 	defer file.Close()
 
-	scanner := bufio.NewScanner(file) // read the contents of the file and make the changes
+	// read the contents of the file and store them
+	scanner := bufio.NewScanner(file)
 	var itemsS []string
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -34,29 +36,35 @@ func main() {
 		sent += string(word) + " "
 	}
 	//fix the editing functions with regex
-	reU:=regexp.MustCompile(`(?i)\(\s*up\s*\)`)
-	sent = reU.ReplaceAllString(sent, "(up)")//up
-	reL:=regexp.MustCompile(`(?i)\(\s*low\s*\)`)
-	sent = reL.ReplaceAllString(sent, "(low)")//low
-	reC:=regexp.MustCompile(`(?i)\(\s*cap\s*\)`)
-	sent = reC.ReplaceAllString(sent, "(cap)")//cap
-	reH:=regexp.MustCompile(`(?i)\(\s*hex\s*\)`)
-	sent = reH.ReplaceAllString(sent, "(hex)")//hex
-	reB:=regexp.MustCompile(`(?i)\(\s*bin\s*\)`)
-	sent = reB.ReplaceAllString(sent, "(bin)")//bin
-	reUN:=regexp.MustCompile(`(?i)\(\s*up\s*,\s*(\d*)\s*\)`)
+	reU := regexp.MustCompile(`(?i)\(\s*up\s*\)`)
+	sent = reU.ReplaceAllString(sent, "(up)") //up
+	reL := regexp.MustCompile(`(?i)\(\s*low\s*\)`)
+	sent = reL.ReplaceAllString(sent, "(low)") //low
+	reC := regexp.MustCompile(`(?i)\(\s*cap\s*\)`)
+	sent = reC.ReplaceAllString(sent, "(cap)") //cap
+	reH := regexp.MustCompile(`(?i)\(\s*hex\s*\)`)
+	sent = reH.ReplaceAllString(sent, "(hex)") //hex
+	reB := regexp.MustCompile(`(?i)\(\s*bin\s*\)`)
+	sent = reB.ReplaceAllString(sent, "(bin)") //bin
+	reUN := regexp.MustCompile(`(?i)\(\s*up\s*,\s*(\d*)\s*\)`)
 	sent = reUN.ReplaceAllString(sent, "(up,$1)") //up w num
-	reLN:=regexp.MustCompile(`(?i)\(\s*low\s*,\s*(\d*)\s*\)`)
+	reLN := regexp.MustCompile(`(?i)\(\s*low\s*,\s*(\d*)\s*\)`)
 	sent = reLN.ReplaceAllString(sent, "(low,$1)") //low w num
-	reCN:=regexp.MustCompile(`(?i)\(\s*cap\s*,\s*(\d*)\s*\)`)
+	reCN := regexp.MustCompile(`(?i)\(\s*cap\s*,\s*(\d*)\s*\)`)
 	sent = reCN.ReplaceAllString(sent, "(cap,$1)") //cap w num
 
-	//turn the sent to an array of string
-	items:=strings.Fields(sent)
+	//turn the sent string to an array of string
+	items := strings.Fields(sent)
 
+	//check for the simple functions and apply changes
+	var err error // for any errors
 	for i, word := range items {
 		if word == "(bin)" {
-			items[i-1] = piscine.Bin2Dec(items[i-1])
+			items[i-1], err = piscine.Bin2Dec(items[i-1])
+			if err != nil {
+				fmt.Println("Error:", err)
+				os.Exit(1)
+			}
 		} else if word == "(hex)" {
 			items[i-1] = piscine.Hex2Dec(items[i-1])
 		} else if word == "(up)" {
@@ -81,14 +89,14 @@ func main() {
 	// fix apostrophes
 	sentence = piscine.Apostrophe(sentence)
 	// create result file
-	file, err := os.Create(output)
-	if err != nil {
-		panic(err)
+	file, cerr := os.Create(output)
+	if cerr != nil {
+		panic(cerr)
 	}
 	defer file.Close()
 	// write the sentence in the file
 	_, werr := file.WriteString(sentence)
-	if err != nil {
+	if werr != nil {
 		panic(werr)
 	}
 	defer file.Close()
