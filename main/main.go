@@ -37,22 +37,28 @@ func main() {
 	}
 	//fix the editing functions with regex
 	reU := regexp.MustCompile(`(?i)\(\s*up\s*\)`)
-	sent = reU.ReplaceAllString(sent, "(up)") //up
+	sent = reU.ReplaceAllString(sent, " (up)") //up
 	reL := regexp.MustCompile(`(?i)\(\s*low\s*\)`)
-	sent = reL.ReplaceAllString(sent, "(low)") //low
+	sent = reL.ReplaceAllString(sent, " (low)") //low
 	reC := regexp.MustCompile(`(?i)\(\s*cap\s*\)`)
-	sent = reC.ReplaceAllString(sent, "(cap)") //cap
+	sent = reC.ReplaceAllString(sent, " (cap)") //cap
 	reH := regexp.MustCompile(`(?i)\(\s*hex\s*\)`)
-	sent = reH.ReplaceAllString(sent, "(hex)") //hex
+	sent = reH.ReplaceAllString(sent, " (hex)") //hex
 	reB := regexp.MustCompile(`(?i)\(\s*bin\s*\)`)
-	sent = reB.ReplaceAllString(sent, "(bin)") //bin
-	reUN := regexp.MustCompile(`(?i)\(\s*up\s*,\s*(\d*)\s*\)`)
-	sent = reUN.ReplaceAllString(sent, "(up,$1)") //up w num
-	reLN := regexp.MustCompile(`(?i)\(\s*low\s*,\s*(\d*)\s*\)`)
-	sent = reLN.ReplaceAllString(sent, "(low,$1)") //low w num
-	reCN := regexp.MustCompile(`(?i)\(\s*cap\s*,\s*(\d*)\s*\)`)
-	sent = reCN.ReplaceAllString(sent, "(cap,$1)") //cap w num
-
+	sent = reB.ReplaceAllString(sent, " (bin)") //bin
+	reUN := regexp.MustCompile(`(?i)\(\s*up\s*,\s*(\d+)\s*\)`)
+	sent = reUN.ReplaceAllString(sent, " (up,$1)") //up w num
+	reLN := regexp.MustCompile(`(?i)\(\s*low\s*,\s*(\d+)\s*\)`)
+	sent = reLN.ReplaceAllString(sent, " (low,$1)") //low w num
+	reCN := regexp.MustCompile(`(?i)\(\s*cap\s*,\s*(\d+)\s*\)`)
+	sent = reCN.ReplaceAllString(sent, " (cap,$1)") //cap w num
+	//when there is a functions at the start of the line
+	reS:= regexp.MustCompile(`^\s*\(cap\)|^\s*\(low\)|^\s*\(up\)|^\s*\(cap,\d+\)|^\s*\(low,\d+\)|^\s*\(up,\d+\)|^\s*\(bin\)|^\s*\(hex\)`)
+	if reS.MatchString(sent) {
+		f:=strings.Fields(sent)
+		fmt.Printf("Error: %s should have a string preceding it\n",f[0])
+		os.Exit(3)
+	}
 	//turn the sent string to an array of string
 	items := strings.Fields(sent)
 
@@ -66,7 +72,11 @@ func main() {
 				os.Exit(1)
 			}
 		} else if word == "(hex)" {
-			items[i-1] = piscine.Hex2Dec(items[i-1])
+			items[i-1], err = piscine.Hex2Dec(items[i-1])
+			if err != nil {
+				fmt.Println("Error:", err)
+				os.Exit(2)
+			}
 		} else if word == "(up)" {
 			items[i-1] = strings.ToUpper(items[i-1])
 		} else if word == "(low)" {

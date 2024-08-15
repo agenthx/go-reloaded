@@ -13,17 +13,17 @@ func UpLowCap(items []string) string {
 		if strings.HasPrefix(word, "(up,") { // we found the up with number
 			what = 1
 			place = i
-			num = ExtractNum(word)
+			num = ExtractNum(word, place)
 			items = modify(what, place, num, items)
 		} else if strings.HasPrefix(word, "(low,") { // we found the low with number
 			what = 2
 			place = i
-			num = ExtractNum(word)
+			num = ExtractNum(word, place)
 			items = modify(what, place, num, items)
 		} else if strings.HasPrefix(word, "(cap,") { // we found the cap with number
 			what = 3
 			place = i
-			num = ExtractNum(word)
+			num = ExtractNum(word, place)
 			items = modify(what, place, num, items)
 		}
 	}
@@ -35,12 +35,15 @@ func UpLowCap(items []string) string {
 	return sent
 }
 
-func ExtractNum(word string) int {
+func ExtractNum(word string, place int) int {
 	var num int
 	for _, ch := range word {
 		if ch > '0' && ch < '9' {
 			num, _ = strconv.Atoi(string(ch)) // we extracted the number
 		}
+	}
+	if place < num {
+		return place
 	}
 	return num
 }

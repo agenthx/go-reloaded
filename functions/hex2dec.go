@@ -1,11 +1,19 @@
 package piscine
 
 import (
+	"fmt"
 	"math"
+	"regexp"
 	"strconv"
+	"strings"
 )
 
-func Hex2Dec(hex string) string {
+func Hex2Dec(hex string) (string, error) {
+	hex = strings.ToUpper(hex) //capatalize the hex
+	reH := regexp.MustCompile(`[^0-9A-F-]`)
+	if reH.MatchString(hex) {
+		return "", fmt.Errorf("string '%s' contains non hex values (0-9 A-F)", hex)
+	}
 	hexI := make([]int, len(hex)) //array hexI to store each hex converted to its int
 	c := 0.0                      // counter
 	dec := 0                      //decimal
@@ -23,6 +31,9 @@ func Hex2Dec(hex string) string {
 		dec += hexI[i] * int(math.Pow(16, c))
 		c++
 	}
+	if hexI[0] == 0 {
+		return "-" + strconv.Itoa(dec), nil
+	}
 	//convert dec int to string
-	return strconv.Itoa(dec)
+	return strconv.Itoa(dec), nil
 }
