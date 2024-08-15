@@ -13,6 +13,11 @@ import (
 func main() {
 	arr := os.Args //save the args given
 
+	if len(arr) < 3 {
+		fmt.Println("Error: should be only 3 arguments")
+		os.Exit(4)
+	}
+
 	input := arr[1]  //file to read
 	output := arr[2] // file to write
 
@@ -59,6 +64,15 @@ func main() {
 		fmt.Printf("Error: %s should have a string preceding it\n",f[0])
 		os.Exit(3)
 	}
+	//check for consecutive functions
+	reCC:= regexp.MustCompile(`\((up|cap|low|hex|bin|up,\d+|low,\d+|cap,\d+)\)\s*\((up|cap|low|hex|bin|up,\d+|low,\d+|cap,\d+)\)`)
+	if reCC.MatchString(sent) {
+		fmt.Print("Error: you can't have consecutive functions\n")
+		os.Exit(5)
+	}
+	//remove the don't thing
+	reAA:= regexp.MustCompile(`([[:alpha:]])'([[:alpha:]])`)
+	sent = reAA.ReplaceAllString(sent, "$1$2")
 	//turn the sent string to an array of string
 	items := strings.Fields(sent)
 
